@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://dpdpone.syfpos.com/mpp/UniFi.js" id="unifi"></script>
+	<script type="text/javascript" id="func">
+			function selectValue() {
+				window.location = mpp.envUrl
+				syfMPP.calldBuyProcess()
+					var car = {
+					car: "sedan"
+					};
+
+					window.alert(JSON.stringify(mpp.envUrl))
+}
+	</script>
+</head>
+	<body>
+		<button style="text-align:center;" onclick="selectValue();">Click</button>
+	</body>
+</html>
+
+<!--{"syfPartnerId":"PI53421676","tokenId":"PI5342167645385185df6e3851","encryptKey":"","modalType":"","childMid":"","childPcgc":"","childTransType":"","pcgc":"","partnerCode":"","clientToken":"","postbackid":"d979e5b7-6382-4e4e-b269-aab027bbed58","clientTransId":"","cardNumber":"","custFirstName":"","custLastName":"","expMonth":"","expYear":"","custZipCode":"","custAddress1":"","phoneNumb":"","appartment":"","emailAddr":"","custCity":"","upeProgramName":"","custState":"","transPromo1":"","iniPurAmt":"","mid":"","productCategoryNames":"","transAmount1":"700","transAmounts":"","initialAmount":"","envUrl":"https://dpdpone.syfpos.com/mitservice/","productAttributes":"","processInd":"3"}
+-->
