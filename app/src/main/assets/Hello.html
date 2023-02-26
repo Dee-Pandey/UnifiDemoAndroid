@@ -1,16 +1,15 @@
-<!DOCTYPE html>
 <html>
 <head>
-	<script src="https://dpdpone.syfpos.com/mpp/UniFi.js" id="unifi"></script>
-	<script type="text/javascript" id="func">
-			function selectValue() {
-<!--				window.location = mpp.envUrl-->
-				window.alert(JSON.stringify(tipFormJson))
-}
+	<script id ="syfMPPScript" type="text/javascript" src="https://dpdpone.syfpos.com/mpp/UniFi.js"></script>
+	<script>
+		function loadPage(){
+			window.syfMPP.calldBuyProcess(null, tipFormJson);
+		}
 	</script>
+	<meta name="viewport" content="width=device-width">
 </head>
-	<body>
-		<button style="text-align:center;" onclick="selectValue();">Click</button>
+	<body onload="loadPage()">
+	<h2>Native App</h2>
 	</body>
 </html>
 

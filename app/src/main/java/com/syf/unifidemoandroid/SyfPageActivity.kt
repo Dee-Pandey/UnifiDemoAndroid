@@ -89,7 +89,7 @@ class SyfPageActivity : AppCompatActivity() {
 //            val merchantInfo = MerchantInfo("N123456", "SYF ZETAIL Merchant", "ZETAIL VISA Rewards Card", "BC", "A600", "5348120820046126", "5348120820030393", "PI1000011702")
 //            val applicantInfo = ApplicantInfo("pavankumar.padamati@syf.com", "950", 950)
 //            val d2DModal = D2DModal("N",applicantInfo, merchantInfo, strategyInfo, "EMAIL_AND_MERCHANT", "https://qpdpone.syfpos.com/mppvore/d2d", "MPP")
-            val tipFormModal = TipFormModal("421676PI53", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "1000", "", "", "", "", "","", "", "","", "", "","")
+            val tipFormModal = TipFormModal("PI53421676", "18683494089PI534216760157", "", "", "", "", "", "", "", "", "8c9f9578-7532-461f-ab11-9054d017be12", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "1000", "", "1000", "", "", "","", "", "","", "", "https://dpdpone.syfpos.com/mitservice/","3")
             val tipFormJson = mapper.writeValueAsString(tipFormModal)
             println("tipFormJson: $tipFormJson")
 
