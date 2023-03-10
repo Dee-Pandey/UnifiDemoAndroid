@@ -10,11 +10,17 @@
         android:id="@+id/button_load"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="108dp"
-        android:layout_marginTop="448dp"
-        android:text="Load HTML"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:text="Close"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints" />
 
     <WebView
         android:id="@+id/syfWebView"
