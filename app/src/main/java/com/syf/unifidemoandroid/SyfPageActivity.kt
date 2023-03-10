@@ -19,6 +19,7 @@ class SyfPageActivity : AppCompatActivity() {
     // private val url = "https://ppdpone.syfpos.com/mpp/mpp?partnerId=PI53421676&amount=800&syfToken=MPP16706334026627PI53421676&productCategoryNames=&flowType=PDP&cid=unifitest&adobe_mc=MCMID%3D11699604732310737292115892261680123387%7CMCORGID%3D22602B6956FAB4777F000101%2540AdobeOrg%7CTS%3D1670633403&_ga=2.172105827.1545651286.1670631858-1876618331.1669861855"
      private val url = ""
     private lateinit var syfWebView:WebView
+    private lateinit var closeButton:Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_syf_page)
@@ -32,6 +33,7 @@ class SyfPageActivity : AppCompatActivity() {
         webSettings.javaScriptCanOpenWindowsAutomatically = true
         webSettings.supportMultipleWindows()
         syfWebView.loadUrl("https://dpdpone.syfpos.com/mpp/native-android-dbuy.html")
+//        syfWebView.loadUrl("http://10.0.2.2:8000/static/hello.html")
 //        syfWebView.loadUrl("file:///android_asset/Hello.html")
 
 //        Log.v(TAG, "onCreate url=" + url);
@@ -42,15 +44,13 @@ class SyfPageActivity : AppCompatActivity() {
         syfWebView.webChromeClient = MyWebChromeClient()
 //        WebView.setWebContentsDebuggingEnabled(false)
 
-        var myButton = findViewById<Button>(R.id.button_load)
-        myButton.setOnClickListener {
+        closeButton = findViewById<Button>(R.id.button_load)
+        closeButton.setOnClickListener {
             // make a toast on button click event
-            Toast.makeText(this, "Hi there! This is a Toast.", Toast.LENGTH_LONG).show()
-            moveTaskToBack(false)
-//            syfWebView.visibility = View.GONE
-//            syfWebView.destroy()
-//            android.os.Process.killProcess(android.os.Process.myPid())
-//            System.exit(1)
+//            Toast.makeText(this, "Hi there! This is a Toast.", Toast.LENGTH_LONG).show()
+            syfWebView.evaluateJavascript("javascript:onCloseModal()",null) //This is loading from dbuy page instead of parent html.
+            val intent = Intent(this, MainActivity::class.java)
+            this.startActivity(intent)
         }
     }
 
@@ -108,7 +108,7 @@ class SyfPageActivity : AppCompatActivity() {
             super.onPageFinished(view, url)
 //            var jsonPayloadScript = "var data = {nativeApp:\"Y\"," + "processInd:\"1\"," + "tokenId:\"53481206597040191678449762402\",merchantID:\"5348120659704019\",childMid:\"\",clientTransId:\"\",custFirstName:\"\",custLastName:\"\",custZipCode:\"\",cardNumber:\"\",expMonth:\"\",expYear:\"\",iniPurAmt:\"\",custAddress1:\"\",custAddress2:\"\",phoneNumber:\"\",emailAddress:\"\",custCity:\"\",custState:\"\",upeProgramName:\"\",transPromo1:\"\",transAmount1:\"\",transPromo2:\"\",transAmount2:\"\",transPromo3:\"\",transAmount3:\"\",mid:\"5348120659704019\",pcgc:\"\",defaultPromoCode:\"\"}"
             val mapper = jacksonObjectMapper();
-            val dbuyTipFormModal = DBuyTipFormModal("Y", "1", "53481206597040191678457834703", "5348120659704019", "","", "","","","","","","","","","","","","","","","900","","","","","5348120659704019","","")
+            val dbuyTipFormModal = DBuyTipFormModal("Y", "3", "53481209400999711678464361345", "5348120940099971", "","", "","","","","","","","","","","","","","","","900","","","","","5348120940099971","","")
             val tipFormJson = mapper.writeValueAsString(dbuyTipFormModal)
             println(tipFormJson)
             view.evaluateJavascript("javascript:loadJsonObject($tipFormJson)",null)
