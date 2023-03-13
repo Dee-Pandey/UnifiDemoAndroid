@@ -15,9 +15,9 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 
 class SyfPageActivity : AppCompatActivity() {
     private val TAG = "SyfPageActivity"
-     //private val url = "https://ppdpone.syfpos.com/mit/?widgetload=y&amount=100&flowType=pdp&partnerId=PI53421676&calcLoadTime=N";
+    //private val url = "https://ppdpone.syfpos.com/mit/?widgetload=y&amount=100&flowType=pdp&partnerId=PI53421676&calcLoadTime=N";
     // private val url = "https://ppdpone.syfpos.com/mpp/mpp?partnerId=PI53421676&amount=800&syfToken=MPP16706334026627PI53421676&productCategoryNames=&flowType=PDP&cid=unifitest&adobe_mc=MCMID%3D11699604732310737292115892261680123387%7CMCORGID%3D22602B6956FAB4777F000101%2540AdobeOrg%7CTS%3D1670633403&_ga=2.172105827.1545651286.1670631858-1876618331.1669861855"
-     private val url = ""
+    private val url = ""
     private lateinit var syfWebView:WebView
     private lateinit var closeButton:Button
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,23 +32,21 @@ class SyfPageActivity : AppCompatActivity() {
         webSettings.domStorageEnabled = true
         webSettings.javaScriptCanOpenWindowsAutomatically = true
         webSettings.supportMultipleWindows()
-        syfWebView.loadUrl("https://dpdpone.syfpos.com/mpp/native-android-dbuy.html")
-//        syfWebView.loadUrl("http://10.0.2.2:8000/static/hello.html")
+//        syfWebView.loadUrl("https://dpdpone.syfpos.com/mpp/native-android-dbuy.html")
+        syfWebView.loadUrl("http://10.0.2.2:8000/static/hello.html")
 //        syfWebView.loadUrl("file:///android_asset/Hello.html")
-
 //        Log.v(TAG, "onCreate url=" + url);
-//        syfWebView.loadUrl(url)
-        syfWebView.addJavascriptInterface(UnifiAndroidJavascriptIntf(this), "UnifiAndroidJSIntf")
-
         syfWebView.webViewClient = UnifiWebViewClient()
         syfWebView.webChromeClient = MyWebChromeClient()
 //        WebView.setWebContentsDebuggingEnabled(false)
+        syfWebView.addJavascriptInterface(UnifiAndroidJavascriptIntf(this), "UnifiAndroidJSIntf")
 
         closeButton = findViewById<Button>(R.id.button_load)
         closeButton.setOnClickListener {
             // make a toast on button click event
 //            Toast.makeText(this, "Hi there! This is a Toast.", Toast.LENGTH_LONG).show()
-            syfWebView.evaluateJavascript("javascript:onCloseModal()",null) //This is loading from dbuy page instead of parent html.
+//            syfWebView.evaluateJavascript("javascript:onCloseModal()",null) //This is tying loading from dbuy page instead of parent html.
+//            this.injectJavascript(syfWebView)
             val intent = Intent(this, MainActivity::class.java)
             this.startActivity(intent)
         }
@@ -106,6 +104,9 @@ class SyfPageActivity : AppCompatActivity() {
         override fun onPageFinished(view: WebView, url: String) {
             // TODO Auto-generated method stub
             super.onPageFinished(view, url)
+            if (view != null) {
+                injectJavascript(view)
+            }
 //            var jsonPayloadScript = "var data = {nativeApp:\"Y\"," + "processInd:\"1\"," + "tokenId:\"53481206597040191678449762402\",merchantID:\"5348120659704019\",childMid:\"\",clientTransId:\"\",custFirstName:\"\",custLastName:\"\",custZipCode:\"\",cardNumber:\"\",expMonth:\"\",expYear:\"\",iniPurAmt:\"\",custAddress1:\"\",custAddress2:\"\",phoneNumber:\"\",emailAddress:\"\",custCity:\"\",custState:\"\",upeProgramName:\"\",transPromo1:\"\",transAmount1:\"\",transPromo2:\"\",transAmount2:\"\",transPromo3:\"\",transAmount3:\"\",mid:\"5348120659704019\",pcgc:\"\",defaultPromoCode:\"\"}"
             val mapper = jacksonObjectMapper();
             val dbuyTipFormModal = DBuyTipFormModal("Y", "3", "53481209400999711678464361345", "5348120940099971", "","", "","","","","","","","","","","","","","","","900","","","","","5348120940099971","","")
@@ -128,14 +129,25 @@ class SyfPageActivity : AppCompatActivity() {
         }
     }
 
+    private fun injectJavascript(view: WebView){
+        view!!.loadUrl(
+            """
+                javascript:(function(){
+                    let closebutton  = document.getElementById("closebuttonDisplay");
+                    closebutton.addEventListener("click", function(){UnifiAndroidJSIntf.setStatusMessageFromJS("Hi There...");})
+                })()
+            """
+        )
+    }
+
     private inner class UnifiAndroidJavascriptIntf(private val context: Context) {
         private val TAG = "UnifiAndroidJavascriptI"
         @JavascriptInterface
         fun setStatusMessageFromJS(message: String) {
-             Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
             Log.v(TAG, "receiveMessage =$message");
-            val intent = Intent(context, MainActivity::class.java)
-            context.startActivity(intent)
+//            val intent = Intent(context, MainActivity::class.java) // if message is buttonclose
+//            context.startActivity(intent)
         }
     }
 
