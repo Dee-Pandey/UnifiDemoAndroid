@@ -134,7 +134,7 @@ class SyfPageActivity : AppCompatActivity() {
             """
                 javascript:(function(){
                     let closebutton  = document.getElementById("closebuttonDisplay");
-                    closebutton.addEventListener("click", function(){UnifiAndroidJSIntf.setStatusMessageFromJS("Hi There...");})
+                    closebutton.addEventListener("click", function(){UnifiAndroidJSIntf.setStatusMessageFromJS("Hi There");})
                 })()
             """
         )
@@ -146,8 +146,11 @@ class SyfPageActivity : AppCompatActivity() {
         fun setStatusMessageFromJS(message: String) {
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
             Log.v(TAG, "receiveMessage =$message");
-//            val intent = Intent(context, MainActivity::class.java) // if message is buttonclose
-//            context.startActivity(intent)
+            if(message=="Hi There"){
+                val intent = Intent(context, MainActivity::class.java) // if message is buttonclose
+                context.startActivity(intent)
+            }
+
         }
     }
 
