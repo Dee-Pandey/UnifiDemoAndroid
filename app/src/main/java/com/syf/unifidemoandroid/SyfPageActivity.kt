@@ -33,8 +33,8 @@ class SyfPageActivity : AppCompatActivity() {
         webSettings.javaScriptCanOpenWindowsAutomatically = true
         webSettings.supportMultipleWindows()
 //        syfWebView.loadUrl("https://dpdpone.syfpos.com/mpp/native-android-dbuy.html")
-        syfWebView.loadUrl("http://10.0.2.2:8000/static/hello.html")
-//        syfWebView.loadUrl("file:///android_asset/Hello.html")
+        syfWebView.loadUrl("http://10.0.2.2:8000/static/native-app-non-unify.html")
+//        syfWebView.loadUrl("file:///android_asset/native-app-non-unify.html.html")
 //        Log.v(TAG, "onCreate url=" + url);
         syfWebView.webViewClient = UnifiWebViewClient()
         syfWebView.webChromeClient = MyWebChromeClient()
@@ -43,12 +43,7 @@ class SyfPageActivity : AppCompatActivity() {
 
         closeButton = findViewById<Button>(R.id.button_load)
         closeButton.setOnClickListener {
-            // make a toast on button click event
-//            Toast.makeText(this, "Hi there! This is a Toast.", Toast.LENGTH_LONG).show()
-//            syfWebView.evaluateJavascript("javascript:onCloseModal()",null) //This is tying loading from dbuy page instead of parent html.
-//            this.injectJavascript(syfWebView)
-            val intent = Intent(this, MainActivity::class.java)
-            this.startActivity(intent)
+            this.closeModel();
         }
     }
 
@@ -60,10 +55,6 @@ class SyfPageActivity : AppCompatActivity() {
         }
     }
     private inner class UnifiWebViewClient : WebViewClient() {
-
-        override fun shouldInterceptRequest(view: WebView, request: WebResourceRequest): WebResourceResponse? {
-            return super.shouldInterceptRequest(view, request)
-        }
         override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
             Log.v(TAG, "shouldOverrideUrlLoading url=" + url);
             return if (url != null && (url.startsWith("https://dpdpone.syfpos.com/cs/")
@@ -103,10 +94,8 @@ class SyfPageActivity : AppCompatActivity() {
         }
         override fun onPageFinished(view: WebView, url: String) {
             // TODO Auto-generated method stub
+
             super.onPageFinished(view, url)
-            if (view != null) {
-                injectJavascript(view)
-            }
 //            var jsonPayloadScript = "var data = {nativeApp:\"Y\"," + "processInd:\"1\"," + "tokenId:\"53481206597040191678449762402\",merchantID:\"5348120659704019\",childMid:\"\",clientTransId:\"\",custFirstName:\"\",custLastName:\"\",custZipCode:\"\",cardNumber:\"\",expMonth:\"\",expYear:\"\",iniPurAmt:\"\",custAddress1:\"\",custAddress2:\"\",phoneNumber:\"\",emailAddress:\"\",custCity:\"\",custState:\"\",upeProgramName:\"\",transPromo1:\"\",transAmount1:\"\",transPromo2:\"\",transAmount2:\"\",transPromo3:\"\",transAmount3:\"\",mid:\"5348120659704019\",pcgc:\"\",defaultPromoCode:\"\"}"
             val mapper = jacksonObjectMapper();
             val dbuyTipFormModal = DBuyTipFormModal("Y", "3", "53481209400999711678464361345", "5348120940099971", "","", "","","","","","","","","","","","","","","","900","","","","","5348120940099971","","")
@@ -117,6 +106,7 @@ class SyfPageActivity : AppCompatActivity() {
             Log.d(TAG, "All the cookies in a string:$cookies")
             Log.v(TAG, "onPageFinished url=$url");
         }
+
         override fun onReceivedError(
             view: WebView,
             request: WebResourceRequest,
@@ -129,26 +119,14 @@ class SyfPageActivity : AppCompatActivity() {
         }
     }
 
-    private fun injectJavascript(view: WebView){
-        view!!.loadUrl(
-            """
-                javascript:(function(){
-                    let closebutton  = document.getElementById("closebuttonDisplay");
-                    closebutton.addEventListener("click", function(){UnifiAndroidJSIntf.setStatusMessageFromJS("Hi There");})
-                })()
-            """
-        )
-    }
-
     private inner class UnifiAndroidJavascriptIntf(private val context: Context) {
         private val TAG = "UnifiAndroidJavascriptI"
         @JavascriptInterface
         fun setStatusMessageFromJS(message: String) {
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
             Log.v(TAG, "receiveMessage =$message");
-            if(message=="Hi There"){
-                val intent = Intent(context, MainActivity::class.java) // if message is buttonclose
-                context.startActivity(intent)
+            if(message=="Close Model"){
+               closeModel();
             }
 
         }
@@ -159,6 +137,13 @@ class SyfPageActivity : AppCompatActivity() {
             syfWebView.goBack()
         }else{
             super.onBackPressed()
+            this.closeModel();
         }
+    }
+
+     fun closeModel() {
+        val intent = Intent(this, MainActivity::class.java) // if message is buttonclose
+        this.startActivity(intent)
+        syfWebView.destroy();
     }
 }
