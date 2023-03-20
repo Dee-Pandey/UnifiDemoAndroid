@@ -1,7 +1,6 @@
 package com.syf.unifidemoandroid
 
 class DBuyTipFormModal(
-    val nativeApp: String,
     val processInd: String,
     val tokenId: String,
     val merchantID: String,

@@ -10,11 +10,11 @@
         android:id="@+id/button_load"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="0dp"
         android:text="Close"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="@id/toolbar"
+        app:layout_constraintTop_toTopOf="@id/toolbar" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
