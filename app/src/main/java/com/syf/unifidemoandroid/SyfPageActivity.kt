@@ -33,7 +33,7 @@ class SyfPageActivity : AppCompatActivity() {
         webSettings.javaScriptCanOpenWindowsAutomatically = true
         webSettings.supportMultipleWindows()
 //        syfWebView.loadUrl("https://dpdpone.syfpos.com/mpp/native-android-dbuy.html")
-        syfWebView.loadUrl("http://10.0.2.2:8000/static/native-app-non-unify-copy.html")
+        syfWebView.loadUrl("https://qpdpone.syfpos.com/mpp/syf-dbuy-webview.html")
 //        syfWebView.loadUrl("file:///android_asset/native-app-non-unify.html.html")
 //        Log.v(TAG, "onCreate url=" + url);
         syfWebView.webViewClient = UnifiWebViewClient()
@@ -70,7 +70,7 @@ class SyfPageActivity : AppCompatActivity() {
             // TODO Auto-generated method stub
 
             super.onPageFinished(view, url)
-            var jsonPayloadScript = "{processInd:\"3\"," + "tokenId:\"53481209400999711679317398592\",merchantID:\"5348120940099971\",childMid:\"\",clientTransId:\"\",custFirstName:\"\",custLastName:\"\",custZipCode:\"\",cardNumber:\"\",expMonth:\"\",expYear:\"\",iniPurAmt:\"\",custAddress1:\"\",custAddress2:\"\",phoneNumber:\"\",emailAddress:\"\",custCity:\"\",custState:\"\",upeProgramName:\"\",transPromo1:\"\",transAmount1:\"900\",transPromo2:\"\",transAmount2:\"\",transPromo3:\"\",transAmount3:\"\",mid:\"5348120940099971\",pcgc:\"\",defaultPromoCode:\"\"}"
+            var jsonPayloadScript = "{processInd:\"3\"," + "tokenId:\"53481209400999711679319914421\",merchantID:\"5348120940099971\",childMid:\"\",clientTransId:\"\",custFirstName:\"\",custLastName:\"\",custZipCode:\"\",cardNumber:\"\",expMonth:\"\",expYear:\"\",iniPurAmt:\"\",custAddress1:\"\",custAddress2:\"\",phoneNumber:\"\",emailAddress:\"\",custCity:\"\",custState:\"\",upeProgramName:\"\",transPromo1:\"\",transAmount1:\"900\",transPromo2:\"\",transAmount2:\"\",transPromo3:\"\",transAmount3:\"\",mid:\"5348120940099971\",pcgc:\"\",defaultPromoCode:\"\"}"
             val mapper = jacksonObjectMapper();
             val dbuyTipFormModal = DBuyTipFormModal( "3", "53481209400999711678989522963", "5348120940099971", "","", "","","","","","","","","","","","","","","","900","","","","","5348120940099971","","")
             val tipFormJson = mapper.writeValueAsString(dbuyTipFormModal)
