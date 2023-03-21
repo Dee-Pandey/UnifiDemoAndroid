@@ -20,6 +20,7 @@ class SyfPageActivity : AppCompatActivity() {
     private val url = ""
     private lateinit var syfWebView:WebView
     private lateinit var closeButton:Button
+    private lateinit var jsonPayload : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_syf_page)
@@ -70,14 +71,15 @@ class SyfPageActivity : AppCompatActivity() {
             // TODO Auto-generated method stub
 
             super.onPageFinished(view, url)
-            var jsonPayloadScript = "{processInd:\"3\"," + "tokenId:\"53481209400999711679319914421\",merchantID:\"5348120940099971\",childMid:\"\",clientTransId:\"\",custFirstName:\"\",custLastName:\"\",custZipCode:\"\",cardNumber:\"\",expMonth:\"\",expYear:\"\",iniPurAmt:\"\",custAddress1:\"\",custAddress2:\"\",phoneNumber:\"\",emailAddress:\"\",custCity:\"\",custState:\"\",upeProgramName:\"\",transPromo1:\"\",transAmount1:\"900\",transPromo2:\"\",transAmount2:\"\",transPromo3:\"\",transAmount3:\"\",mid:\"5348120940099971\",pcgc:\"\",defaultPromoCode:\"\"}"
+            var jsonPayloadScript = "{processInd:\"3\"," + "tokenId:\"53481209400999711679408819965\",merchantID:\"5348120940099971\",childMid:\"\",clientTransId:\"\",custFirstName:\"\",custLastName:\"\",custZipCode:\"\",cardNumber:\"\",expMonth:\"\",expYear:\"\",iniPurAmt:\"\",custAddress1:\"\",custAddress2:\"\",phoneNumber:\"\",emailAddress:\"\",custCity:\"\",custState:\"\",upeProgramName:\"\",transPromo1:\"\",transAmount1:\"900\",transPromo2:\"\",transAmount2:\"\",transPromo3:\"\",transAmount3:\"\",mid:\"5348120940099971\",pcgc:\"\",defaultPromoCode:\"\"}"
             val mapper = jacksonObjectMapper();
             val dbuyTipFormModal = DBuyTipFormModal( "3", "53481209400999711678989522963", "5348120940099971", "","", "","","","","","","","","","","","","","","","900","","","","","5348120940099971","","")
             val tipFormJson = mapper.writeValueAsString(dbuyTipFormModal)
             println(tipFormJson)
-            view.evaluateJavascript("javascript:loadJsonObjectAndroid($jsonPayloadScript)",null)
-            val cookies = CookieManager.getInstance().getCookie(url)
-            Log.d(TAG, "All the cookies in a string:$cookies")
+            jsonPayload = intent.getStringExtra("jsonData").toString()
+            view.evaluateJavascript("javascript:loadJsonObjectAndroid($jsonPayload)",null)
+//            val cookies = CookieManager.getInstance().getCookie(url)
+//            Log.d(TAG, "All the cookies in a string:$cookies")
             Log.v(TAG, "onPageFinished url=$url");
         }
 

@@ -29,6 +29,8 @@ class MainActivity : AppCompatActivity() {
         syfButtonClick.setOnClickListener {
 //            val intent = Intent(this, SyfPageActivity::class.java)
             val intent = Intent(this, SyfPageActivity::class.java)
+            var dbuyPayload = "{processInd:\"3\"," + "tokenId:\"53481209400999711679412158352\",merchantID:\"5348120940099971\",childMid:\"\",clientTransId:\"\",custFirstName:\"\",custLastName:\"\",custZipCode:\"\",cardNumber:\"\",expMonth:\"\",expYear:\"\",iniPurAmt:\"\",custAddress1:\"\",custAddress2:\"\",phoneNumber:\"\",emailAddress:\"\",custCity:\"\",custState:\"\",upeProgramName:\"\",transPromo1:\"\",transAmount1:\"900\",transPromo2:\"\",transAmount2:\"\",transPromo3:\"\",transAmount3:\"\",mid:\"5348120940099971\",pcgc:\"\",defaultPromoCode:\"\"}"
+            intent.putExtra("jsonData",dbuyPayload)
             startActivity(intent)
             var webView = WebView(this)
         }
